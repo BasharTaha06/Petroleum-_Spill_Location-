@@ -2,18 +2,19 @@
 class Assets {
   Assets._();
 
-  static const String dataIMG20250128WA0069 = 'assets/data/IMG-20250128-WA0069.jpg';
-  static const String dataIMG20250128WA0070 = 'assets/data/IMG-20250128-WA0070.jpg';
-  static const String dataIMG20250128WA0071 = 'assets/data/IMG-20250128-WA0071.jpg';
-  static const String dataIMG20250128WA0072 = 'assets/data/IMG-20250128-WA0072.jpg';
-  static const String dataIMG20250128WA0073 = 'assets/data/IMG-20250128-WA0073.jpg';
-  static const String dataIMG20250128WA0074 = 'assets/data/IMG-20250128-WA0074.jpg';
+  static const String data1 = 'assets/data/1.jpg';
+  static const String data2 = 'assets/data/2.jpg';
+  static const String data3 = 'assets/data/3.jpg';
+  static const String data4 = 'assets/data/4.jpg';
+  static const String data5 = 'assets/data/5.jpg';
+  static const String data6 = 'assets/data/6.jpg';
   static const String images1 = 'assets/images/1.jpg';
   static const String images2 = 'assets/images/2.jpg';
   static const String images3 = 'assets/images/3.jpg';
   static const String images4 = 'assets/images/4.jpg';
   static const String images5 = 'assets/images/5.jpg';
   static const String imagesA = 'assets/images/A.java';
+  static const String imagesAppLogo = 'assets/images/app_logo.png';
   static const String imagesFace = 'assets/images/face.png';
   static const String imagesSohag = 'assets/images/sohag.jpg';
 
