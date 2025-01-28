@@ -19,7 +19,7 @@ This Flutter application is designed to track and display petroleum spill locati
 
 | Connection Screen | Display Screen |
 |-------------------|----------------|
-| ![studio64_sA2T8EyV91](https://github.com/user-attachments/assets/19a5a6f1-e387-48a7-84d1-2ca305094c71) |![studio64_zGkr3zUggf](https://github.com/user-attachments/assets/9b0f2c9b-b149-4d87-8518-aaf317e1792a)|
+| ![studio64_cWUFfQWzNO](https://github.com/user-attachments/assets/9323561a-378b-4b09-b99c-1ba07cb40c3c)|![studio64_6ZBNXr30gT](https://github.com/user-attachments/assets/3585dc8e-bfaa-44d1-a79b-2534ae818c0a)|
 
 ---
 
