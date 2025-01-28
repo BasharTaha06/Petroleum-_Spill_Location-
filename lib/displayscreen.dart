@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class DisplayScreen extends StatefulWidget {
-  final String ip;
-  final String port;
-  final List<Map<String, String>> dataList;
+  final String ip; // IP address of the ESP32
+  final String port; // Port number of the ESP32
+  final List<Map<String, String>> dataList; // List of data containing location, description, and image
 
   DisplayScreen({
     required this.ip,
@@ -16,98 +16,121 @@ class DisplayScreen extends StatefulWidget {
 }
 
 class _DisplayScreenState extends State<DisplayScreen> {
-  int currentIndex = 0;
-  bool isLoading = false; // To track loading state
+  int currentIndex = 0; // Tracks the current index of the data being displayed
+  bool isLoading = false; // Tracks whether the app is in a loading state
 
-  /// Updates to the next data after a delay of 3 seconds
+  /// Function to navigate to the next location in the data list
   void goToNextLocation() async {
     setState(() {
-      isLoading = true; // Start loading
+      isLoading = true; // Start loading animation
     });
 
-    await Future.delayed(Duration(seconds: 3)); // Simulate a 3-second delay
+    await Future.delayed(Duration(seconds: 3)); // Simulate a 3-second delay for loading
 
     setState(() {
-      currentIndex = (currentIndex + 1) % widget.dataList.length;
-      isLoading = false; // Stop loading
+      currentIndex = (currentIndex + 1) % widget.dataList.length; // Move to the next item in the list
+      isLoading = false; // Stop loading animation
     });
   }
 
-  /// Updates to the previous data
+  /// Function to navigate to the previous location in the data list
   void goToPreviousLocation() async {
     setState(() {
-      isLoading = true; // Start loading
+      isLoading = true; // Start loading animation
     });
 
-    await Future.delayed(Duration(seconds: 3)); // Simulate a 3-second delay
+    await Future.delayed(Duration(seconds: 3)); // Simulate a 3-second delay for loading
 
     setState(() {
-      currentIndex = (currentIndex - 1 + widget.dataList.length) % widget.dataList.length;
-      isLoading = false; // Stop loading
+      currentIndex = (currentIndex - 1 + widget.dataList.length) % widget.dataList.length; // Move to the previous item in the list
+      isLoading = false; // Stop loading animation
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final currentData = widget.dataList[currentIndex];
+    final currentData = widget.dataList[currentIndex]; // Get the current data item based on the index
     return Scaffold(
-      backgroundColor: Color.fromRGBO(235, 227, 227, 1),
+      backgroundColor: Color.fromRGBO(235, 227, 227, 1), // Set background color
       appBar: AppBar(
-        title: Text("Location and Description"),
-        centerTitle: true,
-        backgroundColor: Colors.cyan,
+        title: Text("Location and Description"), // App bar title
+        centerTitle: true, // Center the title
+        backgroundColor: Colors.cyan, // App bar background color
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0), // Add padding around the body content
         child: SingleChildScrollView(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+            crossAxisAlignment: CrossAxisAlignment.stretch, // Stretch children horizontally
             children: [
               // Display loading animation or image based on the state
               isLoading
                   ? Center(
-                child: CircularProgressIndicator(), // Loading animation
+                child: CircularProgressIndicator(), // Show loading spinner
               )
                   : Container(
                 width: double.infinity,
                 height: 300,
                 child: Image.asset(
-                  currentData['image'] ?? 'assets/images/default.jpg',
-                  fit: BoxFit.cover,
+                  currentData['image'] ?? 'assets/images/default.jpg', // Display image from the current data
+                  fit: BoxFit.fill, // Fill the container with the image
                 ),
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 20), // Add vertical spacing
               // Display location and description only when not loading
               if (!isLoading) ...[
                 Text(
                   "Location:",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold), // Style for the location label
                 ),
                 Text(
-                  currentData['location'] ?? "No location available",
-                  style: TextStyle(fontSize: 16),
+                  currentData['location'] ?? "No location available", // Display location from the current data
+                  style: TextStyle(fontSize: 16), // Style for the location text
                 ),
-                SizedBox(height: 20),
+                SizedBox(height: 15), // Add vertical spacing
                 Text(
                   "Description:",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold), // Style for the description label
                 ),
                 Text(
-                  currentData['description'] ?? "No description available",
-                  style: TextStyle(fontSize: 16),
+                  currentData['description'] ?? "No description available", // Display description from the current data
+                  style: TextStyle(fontSize: 16), // Style for the description text
+                ),
+                SizedBox(height: 15), // Add vertical spacing
+                Text(
+                  "Oil Leak Information:",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold), // Style for the oil leak info label
+                ),
+                Text(
+                  currentData['oilLeakInfo'] ?? "No oil leak information available", // Display oil leak info from the current data
+                  style: TextStyle(fontSize: 16), // Style for the oil leak info text
+                ),
+                SizedBox(height: 15), // Add vertical spacing
+                Text(
+                  "Leak Size:",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold), // Style for the leak size label
+                ),
+                Text(
+                  currentData['leakSize'] ?? "No leak size available", // Display leak size from the current data
+                  style: TextStyle(fontSize: 16), // Style for the leak size text
                 ),
               ],
-              SizedBox(height: 150),
+              SizedBox(height: 80), // Add vertical spacing
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween, // Space buttons evenly
                 children: [
+                  // Hide "Previous" button on the first item
+                  if (currentIndex > 0)
+                    ElevatedButton(
+                      onPressed: goToPreviousLocation, // Navigate to the previous location
+                      child: Text("Previous"), // Button text
+                    ),
+                  // Add a spacer if "Previous" button is hidden
+                  if (currentIndex == 0) Spacer(),
+                  // Change "Current" button text to "Get Data"
                   ElevatedButton(
-                    onPressed: goToPreviousLocation,
-                    child: Text("Previous"),
-                  ),
-                  ElevatedButton(
-                    onPressed: goToNextLocation,
-                    child: Text("Current"),
+                    onPressed: goToNextLocation, // Navigate to the next location
+                    child: Text("Get Data"), // Button text
                   ),
                 ],
               ),

@@ -2,6 +2,12 @@
 class Assets {
   Assets._();
 
+  static const String dataIMG20250128WA0069 = 'assets/data/IMG-20250128-WA0069.jpg';
+  static const String dataIMG20250128WA0070 = 'assets/data/IMG-20250128-WA0070.jpg';
+  static const String dataIMG20250128WA0071 = 'assets/data/IMG-20250128-WA0071.jpg';
+  static const String dataIMG20250128WA0072 = 'assets/data/IMG-20250128-WA0072.jpg';
+  static const String dataIMG20250128WA0073 = 'assets/data/IMG-20250128-WA0073.jpg';
+  static const String dataIMG20250128WA0074 = 'assets/data/IMG-20250128-WA0074.jpg';
   static const String images1 = 'assets/images/1.jpg';
   static const String images2 = 'assets/images/2.jpg';
   static const String images3 = 'assets/images/3.jpg';
