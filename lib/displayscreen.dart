@@ -17,20 +17,33 @@ class DisplayScreen extends StatefulWidget {
 
 class _DisplayScreenState extends State<DisplayScreen> {
   int currentIndex = 0;
+  bool isLoading = false; // To track loading state
 
   /// Updates to the next data after a delay of 3 seconds
   void goToNextLocation() async {
-    await Future.delayed(Duration(seconds: 2)); // Add a 3-second delay
+    setState(() {
+      isLoading = true; // Start loading
+    });
+
+    await Future.delayed(Duration(seconds: 3)); // Simulate a 3-second delay
+
     setState(() {
       currentIndex = (currentIndex + 1) % widget.dataList.length;
+      isLoading = false; // Stop loading
     });
   }
 
   /// Updates to the previous data
   void goToPreviousLocation() async {
-    await Future.delayed(Duration(seconds: 2)); // Add a 3-second delay
+    setState(() {
+      isLoading = true; // Start loading
+    });
+
+    await Future.delayed(Duration(seconds: 3)); // Simulate a 3-second delay
+
     setState(() {
       currentIndex = (currentIndex - 1 + widget.dataList.length) % widget.dataList.length;
+      isLoading = false; // Stop loading
     });
   }
 
@@ -50,7 +63,12 @@ class _DisplayScreenState extends State<DisplayScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Container(
+              // Display loading animation or image based on the state
+              isLoading
+                  ? Center(
+                child: CircularProgressIndicator(), // Loading animation
+              )
+                  : Container(
                 width: double.infinity,
                 height: 300,
                 child: Image.asset(
@@ -59,23 +77,26 @@ class _DisplayScreenState extends State<DisplayScreen> {
                 ),
               ),
               SizedBox(height: 20),
-              Text(
-                "Location:",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              Text(
-                currentData['location'] ?? "No location available",
-                style: TextStyle(fontSize: 16),
-              ),
-              SizedBox(height: 20),
-              Text(
-                "Description:",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              Text(
-                currentData['description'] ?? "No description available",
-                style: TextStyle(fontSize: 16),
-              ),
+              // Display location and description only when not loading
+              if (!isLoading) ...[
+                Text(
+                  "Location:",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  currentData['location'] ?? "No location available",
+                  style: TextStyle(fontSize: 16),
+                ),
+                SizedBox(height: 20),
+                Text(
+                  "Description:",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  currentData['description'] ?? "No description available",
+                  style: TextStyle(fontSize: 16),
+                ),
+              ],
               SizedBox(height: 150),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
