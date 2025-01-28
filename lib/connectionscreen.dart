@@ -1,65 +1,64 @@
-import 'package:flutter/material.dart';
-import 'displayscreen.dart'; // Importing the DisplayScreen for navigation after connecting
+import 'package:flutter/material.dart'; // Importing the Flutter Material package for UI components.
+import 'displayscreen.dart'; // Importing a custom screen to display after connection.
 
-// This is the main widget for the ConnectionScreen
 class ConnectionScreen extends StatefulWidget {
   @override
-  _ConnectionScreenState createState() => _ConnectionScreenState();
+  _ConnectionScreenState createState() => _ConnectionScreenState(); // Creates the state for this stateful widget.
 }
 
-// State class for ConnectionScreen
 class _ConnectionScreenState extends State<ConnectionScreen> {
-  // Controllers for the input fields to get IP and port number
+  // Controllers for managing user input in the text fields.
   final TextEditingController ipController = TextEditingController();
   final TextEditingController portController = TextEditingController();
-  bool isConnected = false; // Tracks whether the connection is successful
 
-  // Function to handle the connection logic
+  // A boolean variable to track if the connection is established.
+  bool isConnected = false;
+
+  // Function to simulate connecting to an ESP32 device.
   void connectToESP() async {
-    String ip = ipController.text; // Get the entered IP address
-    String port = portController.text; // Get the entered port number
+    String ip = ipController.text; // Retrieve the entered IP address.
+    String port = portController.text; // Retrieve the entered port number.
 
-    // Regular expression to validate the IP address format
+    // Regex pattern to validate the IP address format.
     final ipRegex = RegExp(
-      r'^(25[0-5]|2[0-4][0-9]|1[0-9]{1,2}|[1-9]?[0-9])\.' // First octet
-      r'(25[0-5]|2[0-4][0-9]|1[0-9]{1,2}|[1-9]?[0-9])\.' // Second octet
-      r'(25[0-5]|2[0-4][0-9]|1[0-9]{1,2}|[1-9]?[0-9])\.' // Third octet
-      r'(25[0-5]|2[0-4][0-9]|1[0-9]{1,2}|[1-9]?[0-9])$', // Fourth octet
+      r'^(25[0-5]|2[0-4][0-9]|1[0-9]{1,2}|[1-9]?[0-9])\.'
+      r'(25[0-5]|2[0-4][0-9]|1[0-9]{1,2}|[1-9]?[0-9])\.'
+      r'(25[0-5]|2[0-4][0-9]|1[0-9]{1,2}|[1-9]?[0-9])\.'
+      r'(25[0-5]|2[0-4][0-9]|1[0-9]{1,2}|[1-9]?[0-9])$',
     );
 
-    // Validate the IP address format
+    // Check if the IP address is invalid and display an error message if so.
     if (!ipRegex.hasMatch(ip)) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Invalid IP Address. Please enter a valid IP.")),
       );
-      return;
+      return; // Exit the function if the IP address is invalid.
     }
 
-    // Check if the port is provided
+    // Check if the port is empty and display an error message if so.
     if (port.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Please provide a port number.")),
       );
-      return;
+      return; // Exit the function if the port is empty.
     }
 
-    // Simulate a connection delay to mimic real-world behavior
+    // Simulate a delay to mimic a connection process.
     await Future.delayed(Duration(seconds: 1));
 
-    // Update the connection status to true
+    // Update the state to mark the connection as established.
     setState(() {
       isConnected = true;
     });
 
-    // Sample data list to simulate data after connection
+    // Prepare a list of data to pass to the next screen.
     List<Map<String, String>> dataList = [
-      // Sample oil leak locations with details
       {
         "location": "Latitude: 0.0, Longitude: 0.0",
         "description": "World map - No oil leak detected.",
         "oilLeakInfo": "No oil leak detected in this area.",
         "leakSize": "0 square meters",
-        "image": "assets/images/5.jpg",
+        "image": "assets/images/5.jpg", // Image asset path.
       },
       {
         "location": "Latitude: 26.5602, Longitude: 31.6956",
@@ -68,10 +67,44 @@ class _ConnectionScreenState extends State<ConnectionScreen> {
         "leakSize": "50 square meters",
         "image": "assets/data/1.jpg",
       },
-      // Additional data entries...
+      {
+        "location": "Latitude: 37.7749, Longitude: -122.4194",
+        "description": "San Francisco, California - Moderate oil leak detected.",
+        "oilLeakInfo": "A moderate oil leak has been detected near the coastline.",
+        "leakSize": "200 square meters",
+        "image": "assets/data/2.jpg",
+      },
+      {
+        "location": "Latitude: 40.7128, Longitude: -74.0060",
+        "description": "New York City, New York - Severe oil leak detected.",
+        "oilLeakInfo": "A severe oil leak has been detected in the Hudson River.",
+        "leakSize": "500 square meters",
+        "image": "assets/data/3.jpg",
+      },
+      {
+        "location": "Latitude: 34.0522, Longitude: -118.2437",
+        "description": "Los Angeles, California - Critical oil leak detected.",
+        "oilLeakInfo": "A critical oil leak has been detected near the port area.",
+        "leakSize": "1000 square meters",
+        "image": "assets/data/4.jpg",
+      },
+      {
+        "location": "Latitude: 48.8566, Longitude: 2.3522",
+        "description": "Paris, France - Minor oil leak detected.",
+        "oilLeakInfo": "A minor oil leak has been detected near the Seine River.",
+        "leakSize": "30 square meters",
+        "image": "assets/data/5.jpg",
+      },
+      {
+        "location": "Latitude: 35.6895, Longitude: 139.6917",
+        "description": "Tokyo, Japan - Moderate oil leak detected.",
+        "oilLeakInfo": "A moderate oil leak has been detected near the industrial zone.",
+        "leakSize": "300 square meters",
+        "image": "assets/data/6.jpg",
+      },
     ];
 
-    // Navigate to DisplayScreen and pass IP, port, and data
+    // Navigate to the DisplayScreen and pass the IP, port, and data list.
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -80,55 +113,51 @@ class _ConnectionScreenState extends State<ConnectionScreen> {
     );
   }
 
-  // Build method to construct the UI
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(235, 227, 227, 1), // Background color
+      backgroundColor: Color.fromRGBO(235, 227, 227, 1), // Set the background color of the screen.
       appBar: AppBar(
         title: Text(
-          "Petroleum Spill Location", // App bar title
+          "Petroleum Spill Location", // Title displayed on the app bar.
+          style: TextStyle(),
         ),
-        centerTitle: true,
-        backgroundColor: Colors.cyan, // App bar background color
+        centerTitle: true, // Center the title on the app bar.
+        backgroundColor: Colors.cyan, // Set the app bar's background color.
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0), // Padding around the UI
+        padding: const EdgeInsets.all(16.0), // Add padding around the body.
         child: SingleChildScrollView(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch, // Stretch elements to fill width
+            crossAxisAlignment: CrossAxisAlignment.stretch, // Stretch children to fill the width.
             children: [
-              // Image widget to display an asset image
+              // Display an image at the top of the screen.
               Container(
-                width: double.infinity,
-                height: 300,
-                child: Image.asset("assets/images/face.png"),
-              ),
-              SizedBox(height: 20), // Spacing
-              // TextField for entering the IP address
+                  width: double.infinity,
+                  height: 300,
+                  child: Image.asset("assets/images/face.png")),
+              SizedBox(height: 20), // Add spacing between elements.
               TextField(
-                controller: ipController,
+                controller: ipController, // Bind this text field to the IP controller.
                 decoration: InputDecoration(
-                  labelText: "ESP32 IP Address",
-                  border: OutlineInputBorder(),
+                  labelText: "ESP32 IP Address", // Hint label for the text field.
+                  border: OutlineInputBorder(), // Add a border around the text field.
                 ),
-                keyboardType: TextInputType.number, // Numeric input
+                keyboardType: TextInputType.number, // Set the keyboard type to numbers.
               ),
-              SizedBox(height: 10), // Spacing
-              // TextField for entering the port number
+              SizedBox(height: 10), // Add spacing between elements.
               TextField(
-                controller: portController,
+                controller: portController, // Bind this text field to the port controller.
                 decoration: InputDecoration(
-                  labelText: "ESP32 Port Number",
-                  border: OutlineInputBorder(),
+                  labelText: "ESP32 Port Number", // Hint label for the text field.
+                  border: OutlineInputBorder(), // Add a border around the text field.
                 ),
-                keyboardType: TextInputType.number, // Numeric input
+                keyboardType: TextInputType.number, // Set the keyboard type to numbers.
               ),
-              SizedBox(height: 20), // Spacing
-              // ElevatedButton to trigger the connection
+              SizedBox(height: 20), // Add spacing between elements.
               ElevatedButton(
-                onPressed: connectToESP,
-                child: Text("Connect"),
+                onPressed: connectToESP, // Call the connectToESP function when pressed.
+                child: Text("Connect"), // Button label.
               ),
             ],
           ),
