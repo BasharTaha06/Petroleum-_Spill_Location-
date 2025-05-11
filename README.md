@@ -126,7 +126,7 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 For questions or feedback, feel free to reach out:
 
-- **Your Name**: Bashar Taha
+- **Bashar Taha** 
 - **GitHub**: [BasharTaha06](https://github.com/BasharTaha06)
 
 ---
